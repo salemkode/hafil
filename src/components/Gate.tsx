@@ -12,8 +12,8 @@ export function Gate({ onOpen }: { onOpen: () => void }) {
     }
   }, [])
 
-  const open = (instant: boolean) => {
-    if (instant || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const open = () => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       document.body.style.overflow = ''
       burstCelebration()
       onOpen()
@@ -47,19 +47,18 @@ export function Gate({ onOpen }: { onOpen: () => void }) {
           </div>
         </div>
         <p className="gate-kicker">حفل تخرّج دفعتَي</p>
-        <h1>
-          BrainWare <span>×</span> Cyber-X
+        <h1 className="gate-title">
+          <span className="gate-title-left">BrainWare</span>
+          <span className="gate-title-x">×</span>
+          <span className="gate-title-right">Cyber-X</span>
         </h1>
         <p className="gate-line">دفعتان. لحظة واحدة.</p>
         <div className="gate-actions">
-          <button className="primary-action" type="button" onClick={() => open(false)}>
+          <button className="primary-action" type="button" onClick={open}>
             <span>افتح التجربة</span>
             <b aria-hidden>
               ←
             </b>
-          </button>
-          <button className="skip-action" type="button" onClick={() => open(true)}>
-            الدخول مباشرة
           </button>
         </div>
       </div>

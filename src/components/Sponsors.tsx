@@ -4,13 +4,17 @@ function SponsorCard({ sponsor }: { sponsor: Sponsor }) {
   const content = (
     <>
       <div className="sponsor-logo">
-        <img src={sponsor.logo} alt={`شعار ${sponsor.name}`} loading="lazy" />
+        {sponsor.logo ? (
+          <img src={sponsor.logo} alt={`شعار ${sponsor.name}`} loading="lazy" />
+        ) : (
+          <span className="sponsor-monogram">{sponsor.latin ?? sponsor.name}</span>
+        )}
       </div>
       <div className="sponsor-info">
         <h4>{sponsor.name}</h4>
         {sponsor.latin && <span>{sponsor.latin}</span>}
         {sponsor.activity && <p>{sponsor.activity}</p>}
-        <small>{sponsor.verified ? 'هوية مرتبطة بصفحة موثقة بالبحث' : 'الاسم من لوحة الرعاة المعتمدة'}</small>
+        {sponsor.verified && <small>هوية مرتبطة بصفحة موثقة بالبحث</small>}
       </div>
       {sponsor.href && (
         <i className="external-mark" aria-hidden>
@@ -47,26 +51,12 @@ export function Sponsors() {
       </div>
 
       <div className="sponsor-stats" data-reveal aria-label="فئات الرعاية">
-        <div className="featured-tier">
-          <strong>1</strong>
-          <span>الراعي الماسي</span>
-        </div>
-        <div>
-          <strong>1</strong>
-          <span>الراعي الذهبي</span>
-        </div>
-        <div>
-          <strong>2</strong>
-          <span>الرعاة الفضيون</span>
-        </div>
-        <div>
-          <strong>4</strong>
-          <span>الرعاة البرونزيون</span>
-        </div>
-        <div>
-          <strong>14</strong>
-          <span>الرعاة المشاركون</span>
-        </div>
+        {TIER_ORDER.map((tier) => (
+          <div className={tier === 'diamond' ? 'featured-tier' : undefined} key={tier}>
+            <strong>{SPONSORS[tier].length}</strong>
+            <span>{TIER_LABELS[tier]}</span>
+          </div>
+        ))}
       </div>
 
       <div className="sponsor-directory">
@@ -88,11 +78,6 @@ export function Sponsors() {
         ))}
       </div>
 
-      <details className="original-board" data-reveal>
-        <summary>عرض لوحة الرعاة الأصلية</summary>
-        <img src="/assets/sponsors-board.jpeg" alt="لوحة الرعاة الأصلية كما اعتمدتها لجنة الحفل" />
-        <p>اللوحة الأصلية هي المرجع النهائي للأسماء والترتيب. أضيفت الروابط فقط عندما ظهر تطابق واضح في البحث.</p>
-      </details>
     </section>
   )
 }

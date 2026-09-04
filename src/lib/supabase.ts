@@ -1,17 +1,40 @@
-import { createClient, type SupabaseClient } from '@supabase/supabase-js'
+import { createClient } from '@supabase/supabase-js'
 
-export interface WallMessage {
-  id: number | string
-  name: string
-  batch: 'guest' | 'cyberx' | 'brainware'
-  message: string
-  created_at: string
+interface Database {
+  public: {
+    Tables: {
+      messages: {
+        Row: {
+          id: number
+          name: string
+          batch: 'guest' | 'cyberx' | 'brainware'
+          message: string
+          created_at: string
+        }
+        Insert: {
+          id?: number
+          name: string
+          batch?: 'guest' | 'cyberx' | 'brainware'
+          message: string
+          created_at?: string
+        }
+        Update: never
+        Relationships: []
+      }
+    }
+    Views: Record<string, never>
+    Functions: Record<string, never>
+    Enums: Record<string, never>
+    CompositeTypes: Record<string, never>
+  }
 }
 
-const url = import.meta.env.VITE_SUPABASE_URL as string | undefined
-const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined
+export type WallMessage = Database['public']['Tables']['messages']['Row']
 
-export const supabase: SupabaseClient | null = url && anonKey ? createClient(url, anonKey) : null
+const url = import.meta.env.VITE_SUPABASE_URL
+const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+
+export const supabase = url && anonKey ? createClient<Database>(url, anonKey) : null
 
 /** true عندما يكون الربط السحابي جاهزاً، وإلا يعمل الجدار بوضع تجريبي محلي */
 export const isCloudWall = supabase !== null

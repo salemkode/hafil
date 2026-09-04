@@ -41,7 +41,7 @@ export function Cohorts() {
           </article>
         ))}
 
-        <div className="meeting-point" data-reveal>
+        <div className="meeting-point is-visible">
           <span aria-hidden>×</span>
           <p>هنا يلتقي المساران</p>
         </div>

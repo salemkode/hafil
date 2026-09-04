@@ -31,7 +31,6 @@ public/
 ## الميزات
 
 - **بوابة دخول** بانقسام سايان/أحمر + إشارات ضوئية + احتفال confetti
-- **صوت محيطي** مولّد بـ Web Audio (بلا ملفات) — زر عائم أعلى الشاشة
 - **شريط تقدم القراءة** بتدرج ثلاثي الألوان
 - **دليل الخريجين**: بحث + فلترة دفعة
 - **عد تنازلي** بأرقام متحركة داخل بطاقة الموعد
@@ -42,7 +41,7 @@ public/
 ## ربط جدار التهنئات (Supabase)
 
 1. أنشئ مشروعًا مجانيًا على [supabase.com](https://supabase.com)
-2. نفّذ `supabase/schema.sql` في SQL Editor
+2. نفّذ `supabase/schema.sql` في SQL Editor لإنشاء جدول `messages` وتفعيل Realtime
 3. انسخ `.env.example` إلى `.env` واملأ `VITE_SUPABASE_URL` و `VITE_SUPABASE_ANON_KEY`
 
 ## النشر (Vercel)

@@ -3,6 +3,8 @@
   "name": "cs-is-hello-world",
   "account_id": "1d3930570e889d7ef9339cba4ff202b5",
   "compatibility_date": "2026-09-01",
+  "workers_dev": false,
+  "preview_urls": false,
   "routes": [
     {
       "pattern": "cs-is.salemkode.com",

@@ -4,7 +4,7 @@ export interface Sponsor {
   name: string
   latin?: string
   activity?: string
-  logo: string
+  logo?: string
   href?: string
   verified?: boolean
 }
@@ -19,77 +19,69 @@ export const TIER_LABELS: Record<Tier, string> = {
 
 export const TIER_SUBTITLES: Record<Tier, string> = {
   diamond: 'شريك الحفل الرئيسي',
-  gold: 'شريك تقني',
+  gold: 'ثلاثة شركاء داعمين',
   silver: 'شريكان داعمان',
-  bronze: 'أربعة شركاء',
-  participant: 'أربعة عشر شريكًا',
+  bronze: 'ثلاثة شركاء',
+  participant: 'تسعة عشر شريكًا',
 }
 
 export const TIER_ORDER: Tier[] = ['diamond', 'gold', 'silver', 'bronze', 'participant']
 
 export const SPONSORS: Record<Tier, Sponsor[]> = {
   diamond: [
-    { name: 'ماكس سيئون للتسوق', latin: 'MAX', activity: 'تسوّق وتجزئة', logo: '/assets/sponsors/diamond/max-shopping.png' },
+    { name: 'ماكس — سيئون للتسوق', latin: 'MAX', activity: 'تسوّق وتجزئة', logo: '/assets/sponsors/diamond/max-shopping.jpg' },
   ],
   gold: [
+    { name: 'بسكويت أبو ولد', latin: 'Abu Walad', logo: '/assets/sponsors/gold/abu-walad.png' },
+    { name: 'إزار', latin: 'iZAR', logo: '/assets/sponsors/silver/izhr.jpg' },
     {
-      name: 'ميثاق سوفت',
-      latin: 'Meethaq Soft',
-      activity: 'حلول تقنية وأنظمة مالية وفنية',
-      logo: '/assets/sponsors/gold/meethaq.png',
-      href: 'https://www.facebook.com/MeethaqSoft/',
-      verified: true,
+      name: 'موشا',
+      latin: 'Mosha',
+      logo: '/assets/sponsors/gold/mosha.png',
     },
   ],
   silver: [
-    { name: 'إزهر', latin: 'IZHR', logo: '/assets/sponsors/silver/izhr.png' },
+    { name: 'الديرة للعبايات', logo: '/assets/sponsors/bronze/aldeerah.jpg' },
     {
-      name: 'معمار دار العناء',
-      activity: 'استشارات وتصميم معماري',
-      logo: '/assets/sponsors/silver/memar-dar-albenaa.png',
-      href: 'https://www.instagram.com/p/DbzkTpqCrS6/',
-      verified: true,
+      name: 'معمار دار الغناء للاستشارات الهندسية والمقاولات',
+      logo: '/assets/sponsors/silver/memar-dar-albenaa.jpg',
     },
   ],
   bronze: [
     {
-      name: 'شاليه جنات',
+      name: 'منتجع جنات',
       latin: 'Janaat Resort',
-      activity: 'منتزه وشاليه عائلي',
-      logo: '/assets/sponsors/bronze/jamaat-resort.png',
-      href: 'https://www.instagram.com/janaat_resort1/',
-      verified: true,
+      logo: '/assets/sponsors/bronze/janaat-resort.jpg',
     },
-    { name: 'حلويات بازمول', latin: 'Bazmol Sweet', activity: 'حلويات', logo: '/assets/sponsors/bronze/bazmol-sweet.png' },
-    { name: 'الديرة', activity: 'علامة محلية', logo: '/assets/sponsors/bronze/aldeerah.png' },
-    { name: 'أنصف', activity: 'مبادرة محلية', logo: '/assets/sponsors/bronze/ansaf.png' },
+    { name: 'حلويات بازمول', latin: 'Bazmol Sweet', logo: '/assets/sponsors/bronze/bazmol-sweet.jpg' },
+    { name: 'نصف', logo: '/assets/sponsors/bronze/ansaf.jpg' },
   ],
   participant: [
-    { name: 'كشخة', activity: 'علامة محلية', logo: '/assets/sponsors/participant/kashkhah.png' },
+    { name: 'طريق الجبل للتجارة العامة', latin: 'KSS', logo: '/assets/sponsors/participant/kss.png' },
+    { name: 'عشق كافيه', logo: '/assets/sponsors/participant/aech-cafe.png' },
     {
-      name: 'بن طالب للتجارة',
-      latin: 'Bin Talib Trading',
-      activity: 'مفروشات وتجارة',
-      logo: '/assets/sponsors/participant/bin-talib-trading.png',
-      href: 'https://www.instagram.com/reel/DT7Omw4DEox/',
-      verified: true,
+      name: 'مجموعة بن طالب للتجارة — بن طالب للمفروشات',
+      logo: '/assets/sponsors/participant/bin-talib-trading.jpg',
     },
-    { name: 'ستار سنتر', latin: 'Star Center', logo: '/assets/sponsors/participant/star-center.png' },
-    { name: 'إشهار', activity: 'دعاية وإعلان', logo: '/assets/sponsors/participant/ishhar.png' },
-    { name: 'جواس', latin: 'JAWAS', logo: '/assets/sponsors/participant/jawas.png' },
-    { name: 'نسيم ستور', latin: 'Naseem Store', activity: 'متجر', logo: '/assets/sponsors/participant/naseem-store.png' },
-    { name: 'كينج', latin: 'KING', logo: '/assets/sponsors/participant/king.png' },
-    { name: 'غرب', activity: 'علامة محلية', logo: '/assets/sponsors/participant/gharb.png' },
-    { name: 'رداء', activity: 'علامة محلية', logo: '/assets/sponsors/participant/ridaa.png' },
-    { name: 'أسيار مور', latin: 'acyarmour', activity: 'تسوّق إلكتروني', logo: '/assets/sponsors/participant/acyarmour.png' },
-    { name: 'إيتش كافيه', latin: 'AECH CAFÉ', activity: 'مقهى', logo: '/assets/sponsors/participant/aech-cafe.png' },
-    { name: 'هارِم', latin: 'Harim', logo: '/assets/sponsors/participant/harim.png' },
-    { name: 'جورداس', latin: 'JORDAS', logo: '/assets/sponsors/participant/jordas.png' },
+    { name: 'ستار بيتزا', latin: 'Star Pizza', logo: '/assets/sponsors/participant/star-pizza.jpg' },
+    { name: 'جورداس كوكيز', latin: 'JORDAS Cookies', logo: '/assets/sponsors/participant/jordas.jpg' },
+    { name: 'إشهار', logo: '/assets/sponsors/participant/ishhar.jpg' },
+    { name: 'مؤسسة جواس للتجارة والتسويق الإلكتروني', latin: 'JAWAS', logo: '/assets/sponsors/participant/jawas.jpg' },
+    { name: 'رواء شاليه', latin: 'Rawa Chalet', logo: '/assets/sponsors/participant/rawa-chalet.jpg' },
+    { name: 'غصن كافيه', latin: 'GUSAN CAFE', logo: '/assets/sponsors/participant/ghosn-cafe.png' },
+    { name: 'كينج', latin: 'KING', logo: '/assets/sponsors/participant/king.jpg' },
+    { name: 'غروب', logo: '/assets/sponsors/participant/gharb.png' },
+    { name: 'مزاج', latin: 'MAZAJ', logo: '/assets/sponsors/participant/mazaj.png' },
+    { name: 'الثريا', latin: 'Al-Thuraya', logo: '/assets/sponsors/participant/al-thuraya.png' },
+    { name: 'مركز اليرموك للتسوق', latin: 'Al Yarmouk Shopping Center', logo: '/assets/sponsors/participant/acyarmour.jpg' },
+    { name: 'آرش كافيه', latin: 'ARCH CAFÉ', logo: '/assets/sponsors/participant/arch-cafe.jpg' },
+    { name: 'نسيم ستور', latin: 'Naseem Store', logo: '/assets/sponsors/participant/naseem-store.jpg' },
     {
-      name: 'استديو حضرموت',
+      name: 'استديو حضرموت للتصوير الرقمي',
       latin: 'Hadramout Studio',
-      activity: 'تصوير فوتوغرافي',
       logo: '/assets/sponsors/participant/hadramout-studio.png',
     },
+    { name: 'مؤسسة صبايا', logo: '/assets/sponsors/participant/sabaya.png' },
+    { name: 'كارزما', latin: 'Charisma', logo: '/assets/sponsors/participant/charisma.jpg' },
   ],
 }

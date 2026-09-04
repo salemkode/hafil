@@ -41,6 +41,11 @@ function writeLocal(list: WallMessage[]) {
   localStorage.setItem(LOCAL_KEY, JSON.stringify(list.slice(0, 80)))
 }
 
+function addMessage(list: WallMessage[], incoming: WallMessage) {
+  if (list.some(({ id }) => id === incoming.id)) return list
+  return [incoming, ...list].slice(0, 60)
+}
+
 async function loadMessages(): Promise<WallMessage[]> {
   if (supabase) {
     const { data, error } = await supabase
@@ -48,7 +53,7 @@ async function loadMessages(): Promise<WallMessage[]> {
       .select('*')
       .order('created_at', { ascending: false })
       .limit(60)
-    if (!error && data) return data as WallMessage[]
+    if (!error && data) return data
     return []
   }
   return readLocal()
@@ -104,12 +109,27 @@ export function GuestWall() {
   const [sent, setSent] = useState(false)
 
   useEffect(() => {
-    loadMessages().then(setMessages)
+    void loadMessages().then(setMessages)
     if (!supabase) return
-    const t = setInterval(() => {
-      loadMessages().then(setMessages)
-    }, 30_000)
-    return () => clearInterval(t)
+    const client = supabase
+
+    const channel = client
+      .channel('messages-wall')
+      .on<WallMessage>(
+        'postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'messages' },
+        (payload) => setMessages((current) => addMessage(current, payload.new)),
+      )
+      .subscribe()
+
+    const refresh = window.setInterval(() => {
+      void loadMessages().then(setMessages)
+    }, 5 * 60_000)
+
+    return () => {
+      window.clearInterval(refresh)
+      void client.removeChannel(channel)
+    }
   }, [])
 
   async function onSubmit(e: FormEvent) {
@@ -126,10 +146,10 @@ export function GuestWall() {
           .insert({ name: cleanName, batch, message: cleanMsg })
           .select()
           .single()
-        if (!error && data) setMessages((prev) => [data as WallMessage, ...prev])
+        if (!error && data) setMessages((current) => addMessage(current, data))
       } else {
         const optimistic: WallMessage = {
-          id: `tmp-${Date.now()}`,
+          id: -Date.now(),
           name: cleanName,
           batch,
           message: cleanMsg,

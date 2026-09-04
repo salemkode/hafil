@@ -74,30 +74,30 @@ const cyberxNames = [
 ]
 
 const brainwareNames = [
-  'Yousef Rajab Bazmol',
-  'Gaafar Asem Bin Taleb',
-  'Ahmed Saeed Bazuhair',
-  'Mohammed Ali Alkaf',
-  'Anas Mohammed Bokir',
-  'Salem Mohammed Shammakh',
-  'Mohammed Ali Alhabshi',
-  'Abdullah Ali Tarshom',
-  'Ali Zakarya Alkatheri',
-  'Mohammed Mahmoud Basyoud',
-  'Yousef Yaaqob Jarwan',
-  'Abdullah Adel Abadi',
-  'Bassam Hasan Binmadhi',
-  'Ahmed Amin Albakry',
-  'Fares Hasan Bin Madhi',
-  'Emad Anees Binobeadeallah',
-  'Wedyan Mohammed Elaiwah',
-  'Heyam Shawqi Baatwah',
-  'Mohammed Ameen Ausella',
+  'عَبْدُ اللهِ عَلِيّ مُبَارَك طَرْشُوم',
+  'سَالِم مُحَمَّد عَبْدُ الْقَادِر شَمَّاخ',
+  'أَحْمَد سَعِيد سَالِم بَازُهَيْر',
+  'جَعْفَر عاصِم مَرْعِي بن طَالِب',
+  'مُحَمَّد أَمِين ثَابِت عُسَيْلَة',
+  'مُحَمَّد مَحْمُود رَجَب بَاسِيْوَد',
+  'عَبْدُ اللَّهِ عَادِلْ عَاشُورْ عَبَّادِي',
+  'هِيام شَوقي نَاصِر بَاعَطوه',
+  'يُوسُف يَعْقُوب أَحْمَد جَرْوَان',
+  'أَنَس مُحَمَّد سَعِيد بَكِير',
+  'بَسَّام حَسَن سَالِم بْن مَاضِي',
+  'أَحْمَدٌ أَمِينٌ يَسْلَمٌ بَكْرِيٌّ',
+  'مُحَمَّد عَلِيّ مُحَمَّد الْكَاف',
+  'عَلِيّ زَكَرِيَّا عَلِيّ الْكَثِيْرِي',
+  'عِمَادْ أَنِيسْ يِسْلَم بِن عَبِيدِالله',
+  'مُحَمَّد عَلِيّ صَالِح الْحَبَشِيّ',
+  'فَارِس حَسَن سَالِم بْن مَاضِي',
+  'يُوسُف رَجَب سَالِم بَازَمُول',
+  'وِدْيَان مُحَمَّد عَلِيّ عُلَيْوَة',
 ]
 
 export const STUDENTS: Student[] = [
-  ...cyberxNames.map<Student>((name) => ({ name, batch: 'cyberx' })),
   ...brainwareNames.map<Student>((name) => ({ name, batch: 'brainware' })),
+  ...cyberxNames.map<Student>((name) => ({ name, batch: 'cyberx' })),
 ]
 
 export const batchById = (id: BatchId): Batch => BATCHES.find((b) => b.id === id)!

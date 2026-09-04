@@ -25,3 +25,18 @@ create policy "anon can insert messages"
   with check (true);
 
 create index if not exists messages_created_at_idx on public.messages (created_at desc);
+
+-- تفعيل بث الرسائل الجديدة عبر Supabase Realtime (آمن عند إعادة تشغيل الملف)
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_publication_tables
+    where pubname = 'supabase_realtime'
+      and schemaname = 'public'
+      and tablename = 'messages'
+  ) then
+    alter publication supabase_realtime add table public.messages;
+  end if;
+end
+$$;
