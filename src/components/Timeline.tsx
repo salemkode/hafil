@@ -7,7 +7,7 @@ export function Timeline() {
       <div className="section-heading" data-reveal>
         <p className="section-index">04 · برنامج الرحلة</p>
         <h2>
-          مساء من الاستقبال <span>إلى التكريم</span>
+          صباحًا من الاستقبال <span>إلى التكريم</span>
         </h2>
       </div>
 
