@@ -21,6 +21,22 @@ interface Database {
         Update: never
         Relationships: []
       }
+      presenter_messages: {
+        Row: {
+          id: number
+          name: string
+          message: string
+          created_at: string
+        }
+        Insert: {
+          id?: number
+          name: string
+          message: string
+          created_at?: string
+        }
+        Update: never
+        Relationships: []
+      }
     }
     Views: Record<string, never>
     Functions: Record<string, never>
@@ -30,6 +46,7 @@ interface Database {
 }
 
 export type WallMessage = Database['public']['Tables']['messages']['Row']
+export type PresenterMessage = Database['public']['Tables']['presenter_messages']['Row']
 
 const url = import.meta.env.VITE_SUPABASE_URL
 const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY

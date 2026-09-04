@@ -1,9 +1,10 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState, type FormEvent } from 'react'
-import { isCloudWall, supabase, type WallMessage } from '../lib/supabase'
+import { isCloudWall, supabase, type PresenterMessage, type WallMessage } from '../lib/supabase'
 import { burstSmall } from '../lib/confetti'
 
 const LOCAL_KEY = 'bwcx-wall-messages'
+const PRESENTER_LOCAL_KEY = 'bwcx-presenter-messages'
 const MAX_LEN = 280
 
 const BATCH_LABELS: Record<WallMessage['batch'], string> = {
@@ -103,8 +104,8 @@ function MessageCard({ msg }: { msg: WallMessage }) {
 export function GuestWall() {
   const [messages, setMessages] = useState<WallMessage[]>([])
   const [name, setName] = useState('')
-  const [batch, setBatch] = useState<WallMessage['batch']>('guest')
   const [message, setMessage] = useState('')
+  const [recipient, setRecipient] = useState<'wall' | 'presenter'>('wall')
   const [sending, setSending] = useState(false)
   const [sent, setSent] = useState(false)
 
@@ -140,10 +141,26 @@ export function GuestWall() {
 
     setSending(true)
     try {
-      if (supabase) {
+      if (recipient === 'presenter') {
+        if (supabase) {
+          const { error } = await supabase
+            .from('presenter_messages')
+            .insert({ name: cleanName, message: cleanMsg })
+          if (error) return
+        } else {
+          let local: PresenterMessage[] = []
+          try {
+            local = JSON.parse(localStorage.getItem(PRESENTER_LOCAL_KEY) ?? '[]') as PresenterMessage[]
+          } catch {
+            local = []
+          }
+          local.unshift({ id: -Date.now(), name: cleanName, message: cleanMsg, created_at: new Date().toISOString() })
+          localStorage.setItem(PRESENTER_LOCAL_KEY, JSON.stringify(local.slice(0, 80)))
+        }
+      } else if (supabase) {
         const { data, error } = await supabase
           .from('messages')
-          .insert({ name: cleanName, batch, message: cleanMsg })
+          .insert({ name: cleanName, batch: 'guest', message: cleanMsg })
           .select()
           .single()
         if (!error && data) setMessages((current) => addMessage(current, data))
@@ -151,7 +168,7 @@ export function GuestWall() {
         const optimistic: WallMessage = {
           id: -Date.now(),
           name: cleanName,
-          batch,
+          batch: 'guest',
           message: cleanMsg,
           created_at: new Date().toISOString(),
         }
@@ -186,8 +203,7 @@ export function GuestWall() {
           </p>
         )}
         <form onSubmit={onSubmit} className="space-y-4">
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div>
+          <div>
               <label htmlFor="wall-name" className="mb-1.5 block text-xs font-bold text-[#91a0b7]">
                 الاسم
               </label>
@@ -200,27 +216,40 @@ export function GuestWall() {
                 placeholder="اسمك الكريم"
                 className="min-h-[46px] w-full border border-[color:var(--line)] bg-[#07111f] px-4 text-sm text-white placeholder:text-[#5b6a80] focus:border-[#32d5ff]/50 focus:outline-none"
               />
-            </div>
-            <div>
-              <label htmlFor="wall-batch" className="mb-1.5 block text-xs font-bold text-[#91a0b7]">
-                تنتمي إلى
-              </label>
-              <select
-                id="wall-batch"
-                value={batch}
-                onChange={(e) => setBatch(e.target.value as WallMessage['batch'])}
-                className="min-h-[46px] w-full appearance-none border border-[color:var(--line)] bg-[#07111f] px-4 text-sm text-white focus:border-[#32d5ff]/50 focus:outline-none"
+          </div>
+          <div>
+            <span className="mb-1.5 block text-xs font-bold text-[#91a0b7]">إلى</span>
+            <div className="grid grid-cols-2 gap-2" role="group" aria-label="مستلم الرسالة">
+              <button
+                type="button"
+                onClick={() => setRecipient('wall')}
+                aria-pressed={recipient === 'wall'}
+                className={`min-h-[46px] border px-4 text-sm font-bold transition-colors ${
+                  recipient === 'wall'
+                    ? 'border-[#32d5ff] bg-[#32d5ff]/15 text-[#32d5ff]'
+                    : 'border-[color:var(--line)] bg-[#07111f] text-[#91a0b7]'
+                }`}
               >
-                <option value="guest">ضيف / مهنئ</option>
-                <option value="cyberx">دفعة Cyber-X — أمن المعلومات</option>
-                <option value="brainware">دفعة BrainWare — علوم الحاسوب</option>
-              </select>
+                الجدار العام
+              </button>
+              <button
+                type="button"
+                onClick={() => setRecipient('presenter')}
+                aria-pressed={recipient === 'presenter'}
+                className={`min-h-[46px] border px-4 text-sm font-bold transition-colors ${
+                  recipient === 'presenter'
+                    ? 'border-[#d8a929] bg-[#d8a929]/15 text-[#d8a929]'
+                    : 'border-[color:var(--line)] bg-[#07111f] text-[#91a0b7]'
+                }`}
+              >
+                رسالة خاصة للمقدم
+              </button>
             </div>
           </div>
           <div>
             <div className="mb-1.5 flex items-center justify-between">
               <label htmlFor="wall-msg" className="block text-xs font-bold text-[#91a0b7]">
-                التهنئة
+                {recipient === 'presenter' ? 'رسالتك إلى المقدم' : 'التهنئة'}
               </label>
               <span className="font-mono text-[0.6rem] text-[#5b6a80]">
                 {message.length}/{MAX_LEN}
@@ -232,7 +261,7 @@ export function GuestWall() {
               onChange={(e) => setMessage(e.target.value.slice(0, MAX_LEN))}
               required
               rows={3}
-              placeholder="اكتب تهنئتك للخريجين…"
+              placeholder={recipient === 'presenter' ? 'اكتب رسالتك الخاصة للمقدم…' : 'اكتب تهنئتك للخريجين…'}
               className="w-full resize-none border border-[color:var(--line)] bg-[#07111f] px-4 py-3 text-sm leading-relaxed text-white placeholder:text-[#5b6a80] focus:border-[#32d5ff]/50 focus:outline-none"
             />
           </div>
@@ -242,7 +271,17 @@ export function GuestWall() {
             className="primary-action w-full justify-center sm:w-auto"
             style={{ touchAction: 'manipulation' }}
           >
-            <span>{sending ? 'جارٍ الإرسال…' : sent ? 'تم النشر ✓' : 'انشر التهنئة'}</span>
+            <span>
+              {sending
+                ? 'جارٍ الإرسال…'
+                : sent
+                  ? recipient === 'presenter'
+                    ? 'وصلت رسالتك للمقدم ✓'
+                    : 'تم النشر ✓'
+                  : recipient === 'presenter'
+                    ? 'إرسال للمقدم'
+                    : 'انشر التهنئة'}
+            </span>
           </button>
         </form>
       </div>

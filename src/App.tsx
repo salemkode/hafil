@@ -15,6 +15,10 @@ import { PresenterInbox } from './components/PresenterInbox'
 
 export default function App() {
   if (window.location.pathname === '/presenter') return <PresenterInbox />
+  return <MainSite />
+}
+
+function MainSite() {
   const [entered, setEntered] = useState(false)
 
   // فئة تجربة JS: تفعيل حركات الكشف (وتبقى المحتويات ظاهرة بدون JS)
