@@ -309,12 +309,16 @@ img {
 }
 
 .gate-logo-card {
+  --cut-size: 10%;
+  --cut-border-color: rgba(255, 255, 255, 0.14);
+
+  position: relative;
   width: 116px;
   height: 116px;
   display: grid;
   place-items: center;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  border: 0;
 }
 
 .gate-logo-card img {
@@ -329,10 +333,58 @@ img {
   clip-path: polygon(10% 0, 100% 0, 100% 90%, 90% 100%, 0 100%, 0 10%);
 }
 
+.brainware-card::after,
+.cyberx-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.brainware-card::after {
+  background:
+    linear-gradient(var(--cut-border-color) 0 0) top right / calc(100% - var(--cut-size)) 1px no-repeat,
+    linear-gradient(var(--cut-border-color) 0 0) right top / 1px calc(100% - var(--cut-size)) no-repeat,
+    linear-gradient(var(--cut-border-color) 0 0) bottom left / calc(100% - var(--cut-size)) 1px no-repeat,
+    linear-gradient(var(--cut-border-color) 0 0) left bottom / 1px calc(100% - var(--cut-size)) no-repeat,
+    linear-gradient(
+      135deg,
+      transparent calc(50% - 0.7px),
+      var(--cut-border-color) calc(50% - 0.7px) calc(50% + 0.7px),
+      transparent calc(50% + 0.7px)
+    ) top left / var(--cut-size) var(--cut-size) no-repeat,
+    linear-gradient(
+      135deg,
+      transparent calc(50% - 0.7px),
+      var(--cut-border-color) calc(50% - 0.7px) calc(50% + 0.7px),
+      transparent calc(50% + 0.7px)
+    ) bottom right / var(--cut-size) var(--cut-size) no-repeat;
+}
+
 .cyberx-card {
   background: rgb(0 0 0 / 10%);
   padding: 0.35rem 0.85rem;
   clip-path: polygon(0 0, 90% 0, 100% 10%, 100% 100%, 10% 100%, 0 90%);
+}
+
+.cyberx-card::after {
+  background:
+    linear-gradient(var(--cut-border-color) 0 0) top left / calc(100% - var(--cut-size)) 1px no-repeat,
+    linear-gradient(var(--cut-border-color) 0 0) right bottom / 1px calc(100% - var(--cut-size)) no-repeat,
+    linear-gradient(var(--cut-border-color) 0 0) bottom right / calc(100% - var(--cut-size)) 1px no-repeat,
+    linear-gradient(var(--cut-border-color) 0 0) left top / 1px calc(100% - var(--cut-size)) no-repeat,
+    linear-gradient(
+      45deg,
+      transparent calc(50% - 0.7px),
+      var(--cut-border-color) calc(50% - 0.7px) calc(50% + 0.7px),
+      transparent calc(50% + 0.7px)
+    ) top right / var(--cut-size) var(--cut-size) no-repeat,
+    linear-gradient(
+      45deg,
+      transparent calc(50% - 0.7px),
+      var(--cut-border-color) calc(50% - 0.7px) calc(50% + 0.7px),
+      transparent calc(50% + 0.7px)
+    ) bottom left / var(--cut-size) var(--cut-size) no-repeat;
 }
 
 .gate-x {
@@ -1156,6 +1208,10 @@ img {
 }
 
 .action-button {
+  --cut-size: 9px;
+  --cut-border-color: #cad5e2;
+
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
@@ -1165,25 +1221,60 @@ img {
   font-size: 0.8rem;
   font-weight: 800;
   background: #fff;
-  border: 1px solid #cad5e2;
+  border: 0;
   cursor: pointer;
-  clip-path: polygon(9px 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%, 0 9px);
+  clip-path: polygon(
+    var(--cut-size) 0,
+    100% 0,
+    100% calc(100% - var(--cut-size)),
+    calc(100% - var(--cut-size)) 100%,
+    0 100%,
+    0 var(--cut-size)
+  );
   transition: transform 0.2s ease, background 0.2s ease;
 }
 
+.action-button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(var(--cut-border-color) 0 0) top right / calc(100% - var(--cut-size)) 1px no-repeat,
+    linear-gradient(var(--cut-border-color) 0 0) right top / 1px calc(100% - var(--cut-size)) no-repeat,
+    linear-gradient(var(--cut-border-color) 0 0) bottom left / calc(100% - var(--cut-size)) 1px no-repeat,
+    linear-gradient(var(--cut-border-color) 0 0) left bottom / 1px calc(100% - var(--cut-size)) no-repeat,
+    linear-gradient(
+      135deg,
+      transparent calc(50% - 0.7px),
+      var(--cut-border-color) calc(50% - 0.7px) calc(50% + 0.7px),
+      transparent calc(50% + 0.7px)
+    ) top left / var(--cut-size) var(--cut-size) no-repeat,
+    linear-gradient(
+      135deg,
+      transparent calc(50% - 0.7px),
+      var(--cut-border-color) calc(50% - 0.7px) calc(50% + 0.7px),
+      transparent calc(50% + 0.7px)
+    ) bottom right / var(--cut-size) var(--cut-size) no-repeat;
+  pointer-events: none;
+}
+
 .action-button:hover {
+  --cut-border-color: #9fb1c6;
+
   transform: translateY(-2px);
   background: #fff;
-  border-color: #9fb1c6;
 }
 
 .action-button.primary {
+  --cut-border-color: var(--color-navy);
+
   color: #fff;
   background: var(--color-navy);
-  border-color: var(--color-navy);
 }
 
 .action-button.primary:hover {
+  --cut-border-color: #1d3a6e;
+
   background: #1d3a6e;
 }
 

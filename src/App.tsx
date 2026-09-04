@@ -11,8 +11,10 @@ import { Timeline } from './components/Timeline'
 import { Sponsors } from './components/Sponsors'
 import { GuestWall } from './components/GuestWall'
 import { Finale } from './components/Finale'
+import { PresenterInbox } from './components/PresenterInbox'
 
 export default function App() {
+  if (window.location.pathname === '/presenter') return <PresenterInbox />
   const [entered, setEntered] = useState(false)
 
   // فئة تجربة JS: تفعيل حركات الكشف (وتبقى المحتويات ظاهرة بدون JS)

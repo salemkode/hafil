@@ -10,6 +10,20 @@ const FILTERS: { id: Filter; label: string }[] = [
   { id: 'brainware', label: 'BrainWare' },
 ]
 
+const arabicCollator = new Intl.Collator('ar', { sensitivity: 'base', numeric: true })
+
+function sortStudents(students: typeof STUDENTS) {
+  return [...students].sort((a, b) => arabicCollator.compare(a.name, b.name))
+}
+
+function normalizeSearchText(value: string) {
+  return value
+    .normalize('NFD')
+    .replace(/[\u064B-\u065F\u0670\u06D6-\u06ED]/g, '')
+    .replace(/[\s-]/g, '')
+    .toLowerCase()
+}
+
 function initialsOf(name: string): string {
   return name
     .split(/\s+/)
@@ -54,12 +68,12 @@ export function Students() {
   const [query, setQuery] = useState('')
 
   const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase()
-    return STUDENTS.filter((s) => {
+    const q = normalizeSearchText(query.trim())
+    return sortStudents(STUDENTS.filter((s) => {
       if (filter !== 'all' && s.batch !== filter) return false
       if (!q) return true
-      return s.name.toLowerCase().includes(q) || s.name.toLowerCase().replace(/[\s-]/g, '').includes(q.replace(/[\s-]/g, ''))
-    })
+      return normalizeSearchText(s.name).includes(q)
+    }))
   }, [filter, query])
 
   return (
@@ -122,13 +136,37 @@ export function Students() {
         {filtered.length === STUDENTS.length ? `SHOWING ALL ${STUDENTS.length}` : `SHOWING ${filtered.length}/${STUDENTS.length}`}
       </p>
 
-      <div className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
-        <AnimatePresence mode="popLayout">
-          {filtered.map((s, i) => (
-            <StudentCard key={s.name} name={s.name} batch={s.batch} index={i} />
-          ))}
-        </AnimatePresence>
-      </div>
+      {filter === 'all' ? (
+        <div className="space-y-8">
+          {BATCHES.map((batch) => {
+            const sectionStudents = filtered.filter((student) => student.batch === batch.id)
+            if (sectionStudents.length === 0) return null
+            return (
+              <div key={batch.id}>
+                <div className="mb-3 flex items-center gap-3">
+                  <h3 className="text-sm font-bold text-white">{batch.department}</h3>
+                  <span className="font-mono text-[0.65rem] tracking-widest text-[#5b6a80]">{sectionStudents.length}</span>
+                </div>
+                <div className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
+                  <AnimatePresence mode="popLayout">
+                    {sectionStudents.map((s, i) => (
+                      <StudentCard key={s.name} name={s.name} batch={s.batch} index={i} />
+                    ))}
+                  </AnimatePresence>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      ) : (
+        <div className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
+          <AnimatePresence mode="popLayout">
+            {filtered.map((s, i) => (
+              <StudentCard key={s.name} name={s.name} batch={s.batch} index={i} />
+            ))}
+          </AnimatePresence>
+        </div>
+      )}
 
       {filtered.length === 0 && (
         <p className="mt-4 border border-[color:var(--line)] bg-[#0a1727] p-8 text-center text-sm text-[#91a0b7]">
