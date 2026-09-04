@@ -6,8 +6,8 @@ type Filter = 'all' | BatchId
 
 const FILTERS: { id: Filter; label: string }[] = [
   { id: 'all', label: 'الجميع' },
-  { id: 'cyberx', label: 'Cyber-X' },
   { id: 'brainware', label: 'BrainWare' },
+  { id: 'cyberx', label: 'Cyber-X' },
 ]
 
 const arabicCollator = new Intl.Collator('ar', { sensitivity: 'base', numeric: true })

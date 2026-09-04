@@ -12,15 +12,6 @@ export interface Batch {
 
 export const BATCHES: Batch[] = [
   {
-    id: 'cyberx',
-    name: 'Cyber-X',
-    nameAr: 'سايبر إكس',
-    department: 'أمن المعلومات',
-    tagline: 'حيث تبدأ الحماية من الوعي',
-    logo: '/assets/cohorts/cyberx-transparent.png',
-    accent: '#f02a4a',
-  },
-  {
     id: 'brainware',
     name: 'BrainWare',
     nameAr: 'برين وير',
@@ -28,6 +19,15 @@ export const BATCHES: Batch[] = [
     tagline: 'حيث تتحول الفكرة إلى أثر',
     logo: '/assets/cohorts/brainware-transparent.png',
     accent: '#32d5ff',
+  },
+  {
+    id: 'cyberx',
+    name: 'Cyber-X',
+    nameAr: 'سايبر إكس',
+    department: 'أمن المعلومات',
+    tagline: 'حيث تبدأ الحماية من الوعي',
+    logo: '/assets/cohorts/cyberx-transparent.png',
+    accent: '#f02a4a',
   },
 ]
 
