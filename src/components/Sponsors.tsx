@@ -46,7 +46,7 @@ export function Sponsors() {
           كل أثر عظيم، <span>وراءه من آمن به</span>
         </h2>
         <p className="section-intro">
-          شكرًا لكل جهة شاركت في صناعة هذه الليلة ودعمت رحلة الدفعتين — {total} شريكًا في {TIER_ORDER.length} فئات.
+          شكرًا لكل جهة شاركت في صناعة هذا الصباح ودعمت رحلة الدفعتين — {total} شريكًا في {TIER_ORDER.length} فئات.
         </p>
       </div>
 

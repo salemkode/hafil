@@ -28,7 +28,7 @@ export function EventCard() {
       <div className="section-heading" data-reveal>
         <p className="section-index">03 · موعدنا</p>
         <h2>
-          ليلة تُكتب <span>في الذاكرة</span>
+          صباح يُكتب <span>في الذاكرة</span>
         </h2>
       </div>
 
