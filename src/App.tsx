@@ -6,15 +6,11 @@ import { Hero } from './components/Hero'
 import { Cohorts } from './components/Cohorts'
 import { Students } from './components/Students'
 import { YearInterlude } from './components/YearInterlude'
-import { EventCard } from './components/EventCard'
-import { Timeline } from './components/Timeline'
 import { Sponsors } from './components/Sponsors'
 import { GuestWall } from './components/GuestWall'
 import { Finale } from './components/Finale'
-import { PresenterInbox } from './components/PresenterInbox'
 
 export default function App() {
-  if (window.location.pathname === '/presenter') return <PresenterInbox />
   return <MainSite />
 }
 
@@ -58,8 +54,6 @@ function MainSite() {
         <Cohorts />
         <Students />
         <YearInterlude />
-        <EventCard />
-        <Timeline />
         <Sponsors />
         <GuestWall />
       </main>

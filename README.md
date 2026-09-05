@@ -18,10 +18,10 @@ npm run preview  # معاينة الإنتاج
 ```
 src/
 ├── data/
-│   ├── event.ts      # التاريخ (سبتمبر 2026)، القاعة (قاعة السيتي · سيئون)، البرنامج
+│   ├── event.ts      # بيانات الذكرى والهوية الأكاديمية
 │   ├── students.ts   # 53 خريجًا (Cyber-X 34 + BrainWare 19)
 │   └── sponsors.ts   # الرعاة: ماسي/ذهبي/فضي/برونزي/مشاركون (22 شريكًا)
-├── components/       # Gate, Hero, Cohorts, Students, EventCard, Timeline, Sponsors, GuestWall, Finale
+├── components/       # Gate, Hero, Cohorts, Students, Sponsors, Finale
 └── index.css         # نظام التصميم: خط ثمانية + كل الأنماط المنقولة
 public/
 ├── fonts/            # Thmanyah woff2 (مستضاف محليًا)
@@ -33,16 +33,9 @@ public/
 - **بوابة دخول** بانقسام سايان/أحمر + إشارات ضوئية + احتفال confetti
 - **شريط تقدم القراءة** بتدرج ثلاثي الألوان
 - **دليل الخريجين**: بحث + فلترة دفعة
-- **عد تنازلي** بأرقام متحركة داخل بطاقة الموعد
-- **جدار تهنئات** (Supabase سحابي / وضع تجريبي محلي)
+- **أرشيف التهاني**: عرض فقط للرسائل التي وصلت أثناء الحفل
 - **قسم رعاة فاتح** بشعارات حقيقية وروابط موثقة + لوحة الرعاة الأصلية
 - احترام `prefers-reduced-motion` ومحتويات ظاهرة بدون JavaScript
-
-## ربط جدار التهنئات (Supabase)
-
-1. أنشئ مشروعًا مجانيًا على [supabase.com](https://supabase.com)
-2. نفّذ `supabase/schema.sql` في SQL Editor لإنشاء جدول `messages` وتفعيل Realtime
-3. انسخ `.env.example` إلى `.env` واملأ `VITE_SUPABASE_URL` و `VITE_SUPABASE_ANON_KEY`
 
 ## النشر (Vercel)
 
@@ -51,9 +44,6 @@ npm i -g vercel
 vercel --prod
 ```
 
-## ⚠️ TODO قبل الحفل
+## الموقع التذكاري
 
-- [x] تأكيد وقت بداية الحفل (`event.ts → targetDate` — 8:30 صباحًا)
-- [ ] رابط خرائط جوجل الدقيق لقاعة السيتي في سيئون
-- [ ] مراجعة برنامج الحفل النهائي
-- [ ] تفعيل Supabase + النشر + QR للموقع
+يحتفظ الموقع بهوية الدفعتين والخريجين والرعاة بوصفه ذكرى للحفل.

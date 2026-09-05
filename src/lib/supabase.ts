@@ -11,29 +11,7 @@ interface Database {
           message: string
           created_at: string
         }
-        Insert: {
-          id?: number
-          name: string
-          batch?: 'guest' | 'cyberx' | 'brainware'
-          message: string
-          created_at?: string
-        }
-        Update: never
-        Relationships: []
-      }
-      presenter_messages: {
-        Row: {
-          id: number
-          name: string
-          message: string
-          created_at: string
-        }
-        Insert: {
-          id?: number
-          name: string
-          message: string
-          created_at?: string
-        }
+        Insert: never
         Update: never
         Relationships: []
       }
@@ -46,12 +24,8 @@ interface Database {
 }
 
 export type WallMessage = Database['public']['Tables']['messages']['Row']
-export type PresenterMessage = Database['public']['Tables']['presenter_messages']['Row']
 
 const url = import.meta.env.VITE_SUPABASE_URL
 const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
 export const supabase = url && anonKey ? createClient<Database>(url, anonKey) : null
-
-/** true عندما يكون الربط السحابي جاهزاً، وإلا يعمل الجدار بوضع تجريبي محلي */
-export const isCloudWall = supabase !== null

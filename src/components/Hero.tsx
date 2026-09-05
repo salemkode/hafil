@@ -17,7 +17,7 @@ export function Hero() {
           <strong>لحظة واحدة.</strong>
         </h2>
         <p className="hero-description">
-          نحتفل بمسارين مختلفين جمعتهما سنوات من التعلّم، وصباح واحد تبدأ منه الحكاية التالية.
+          مساران مختلفان جمعتهما سنوات من التعلّم، وصباحٌ صار جزءًا من حكاية لا تُنسى.
         </p>
         <a className="scroll-cue" href="#cohorts">
           <span>اكتشف الدفعتين</span>
